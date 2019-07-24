@@ -4,6 +4,7 @@ const url = require('url');
 const fs = require('fs');
 const globalConfig = require('./config');
 const loader = require('./loader');
+const log = require('./log');
 http.createServer(function (request, response) {
     var pathName = url.parse(request.url).pathname;
     var params = url.parse(request.url, true).query;
@@ -34,6 +35,7 @@ http.createServer(function (request, response) {
 
 }).listen(12306, function () {
     console.log('服务启动成功')
+    log('服务启动')
 })
 function isStaticFile(pathName) {
     return globalConfig.static_file_type.includes(path.parse(pathName).ext)
