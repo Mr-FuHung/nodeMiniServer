@@ -19,21 +19,44 @@ paths.set('/pageData', function (request, response) {
         }
     })
 })
+// paths.set('/login', function (request, response) {
+//     var params = url.parse(request.url, true).query;
+//     console.log('params',params)
+//     queryStudentBypwd(params, function (err, result) {
+//         if (err) {
+//             response.writeHead(404)
+//             response.end('<html><body><h1>404 查询失败</h1></body></html>')
+//             console.log(err)
+//         } else {
+//             if (result.length === 1) {
+//                 response.end('OK')
+//             } else {
+//                 response.end('NO')
+//             }
+//         }
+//     })
+// })
 paths.set('/login', function (request, response) {
-    var params = url.parse(request.url, true).query;
-    queryStudentBypwd(params, function (err, result) {
-        if (err) {
-            response.writeHead(404)
-            response.end('<html><body><h1>404 查询失败</h1></body></html>')
-            console.log(err)
-        } else {
-            if (result.length === 1) {
-                response.end('OK')
+    let params = {}
+    request.on('data', function (data) {
+        params.password = data.toString().split('&')[1].split('=')[1]
+        params.user = data.toString().split('&')[0].split('=')[1]
+        console.log('data', params)
+        queryStudentBypwd(params, function (err, result) {
+            if (err) {
+                response.writeHead(404)
+                response.end('<html><body><h1>404 查询失败</h1></body></html>')
+                console.log(err)
             } else {
-                response.end('NO')
+                if (result.length === 1) {
+                    response.end('OK')
+                } else {
+                    response.end('NO')
+                }
             }
-        }
+        })
     })
+
 })
 
 module.exports.paths = paths;
