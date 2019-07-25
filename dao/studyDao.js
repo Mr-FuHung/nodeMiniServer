@@ -1,5 +1,5 @@
 const connection = require('./dbutil')
-connection.connect()
+
 
 function queryStudentName(success) {
     let sql = `select * from student`
