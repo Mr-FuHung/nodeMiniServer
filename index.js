@@ -5,6 +5,7 @@ const fs = require('fs');
 const globalConfig = require('./config');
 const loader = require('./loader');
 const log = require('./log');
+
 http.createServer(function (request, response) {
     var pathName = url.parse(request.url).pathname;
     var params = url.parse(request.url, true).query;
@@ -24,8 +25,10 @@ http.createServer(function (request, response) {
             try {
                 loader.get(pathName)(request, response)
             } catch (error) {
+                console.log(error)
+                log(error)
                 response.writeHead(500)
-                response.end('<html><body><h1>服务器出错</h1></body></html>')
+                response.end('<html><body><h1>error in server</h1></body></html>')
             }
         } else {
             response.writeHead(404)

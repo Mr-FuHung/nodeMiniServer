@@ -16,5 +16,4 @@ files.forEach(element => {
         }
     }
 });
-console.log(pathMap)
 module.exports=pathMap
