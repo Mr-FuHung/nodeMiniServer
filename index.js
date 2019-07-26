@@ -4,11 +4,22 @@ const url = require('url');
 const fs = require('fs');
 const globalConfig = require('./config');
 const loader = require('./loader');
+const filterSet = require('./filterLoader');
 const log = require('./log');
 
 http.createServer(function (request, response) {
     var pathName = url.parse(request.url).pathname;
     var params = url.parse(request.url, true).query;
+    
+    var flag = filterSet.every(function (item) {
+        return item(request, response);
+    })
+    if (!flag) {
+        return;
+    }
+
+
+
     var isStatic = isStaticFile(pathName);
     if (isStatic) {//请求的静态文件
         try {

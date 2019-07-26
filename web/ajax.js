@@ -49,9 +49,13 @@ paths.set('/login', function (request, response) {
                 console.log(err)
             } else {
                 if (result.length === 1) {
-                    response.end('OK')
+                    response.writeHead(302, { 'location': '/index.html' ,'Set-Cookie':`id=${params.user}`})
+                    response.end()
+                    // response.writeHead(200)
+                    // response.end('OK')
                 } else {
-                    response.end('NO')
+                    response.writeHead(302, { 'location': '/login.html' })
+                    response.end()
                 }
             }
         })

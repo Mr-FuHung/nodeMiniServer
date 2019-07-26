@@ -5,7 +5,7 @@ let pathMap = new Map();
 
 var files = fs.readdirSync(globalConfig.web_path)//读取配置路径下的所有文件
 files.forEach(element => {
-    let temp = require(`./${globalConfig.web_path}/${element}`)
+    let temp = require(`./${globalConfig.web_path}${element}`)
     if (temp.paths) {
         for (const [key, value] of temp.paths) {
             if (pathMap.get(key) == null) {
@@ -16,4 +16,4 @@ files.forEach(element => {
         }
     }
 });
-module.exports=pathMap
+module.exports = pathMap
